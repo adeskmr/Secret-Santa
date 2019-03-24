@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+import SMSForm from './SMSForm';
+
 
 class App extends Component {
   constructor(props) {
@@ -51,6 +53,7 @@ class App extends Component {
           >
             Learn React
           </a>
+          <SMSForm />
         </header>
       </div>
     );
