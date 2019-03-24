@@ -1,13 +1,17 @@
 {
   "name": "secretsanta",
+  "proxy": "http://localhost:3001",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "express": "^4.16.4",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-scripts": "2.1.8"
   },
   "scripts": {
+    "server": "node-env-run server --exec nodemon | pino-colada",
+    "dev": "run-p server start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -21,5 +25,13 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "twilio": "^3.29.2"
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
+
 }
