@@ -1,29 +1,31 @@
 import React, { Component } from 'react';
 import './App.css';
 import SMSForm from './SMSForm';
+import TestForm from './test';
+import SMS from './SMS';
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      greeting: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     name: '',
+  //     greeting: ''
+  //   };
+  //   this.handleChange = this.handleChange.bind(this);
+  //   this.handleSubmit = this.handleSubmit.bind(this);
+  // }
 
-  handleChange(event) {
-    this.setState({ name: event.target.value });
-  }
+  // handleChange(event) {
+  //   this.setState({ name: event.target.value });
+  // }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    fetch(`/api/greeting?name=${encodeURIComponent(this.state.name)}`)
-      .then(response => response.json())
-      .then(state => this.setState(state));
-  }
+  // handleSubmit(event) {
+  //   event.preventDefault();
+  //   fetch(`/api/greeting?name=${encodeURIComponent(this.state.name)}`)
+  //     .then(response => response.json())
+  //     .then(state => this.setState(state));
+  // }
 
   render() {
     return (
@@ -31,10 +33,7 @@ class App extends Component {
         <header className="App-header">
           <h1>Secret Santa</h1>
           
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <form onSubmit={this.handleSubmit}>
+          {/* <form onSubmit={this.handleSubmit}>
             <label htmlFor="name">Enter your name: </label>
             <input
               id="name"
@@ -43,8 +42,8 @@ class App extends Component {
               onChange={this.handleChange}
             />
             <button type="submit">Submit</button>
-          </form>
-          <p>{this.state.greeting}</p>
+          </form> */}
+          {/* <p>{this.state.greeting}</p>
           <a
             className="App-link"
             href="https://reactjs.org"
@@ -52,8 +51,10 @@ class App extends Component {
             rel="noopener noreferrer"
           >
             Learn React
-          </a>
+          </a> */}
           <SMSForm />
+          {/* <TestForm /> */}
+          <SMS />
         </header>
       </div>
     );

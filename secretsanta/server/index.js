@@ -11,18 +11,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(pino);
 
-app.get('/api/greeting', (req, res) => {
-  const name = req.query.name || 'World';
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
-});
+// app.get('/api/greeting', (req, res) => {
+//   const name = req.query.name || 'World';
+//   res.setHeader('Content-Type', 'application/json');
+//   res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
+// });
 
-app.post('/api/messages', (req, res) => {
+app.post('/api/people', (req, res) => {
     res.header('Content-Type', 'application/json');
-    client.messages
+    client.people
     .create({
       from: process.env.TWILIO_PHONE_NUMBER,
       to: req.body.to,
+      hello: req.body.hello,
       body: req.body.body
     })
     .then(() => {
