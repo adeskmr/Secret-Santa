@@ -6,8 +6,8 @@ class SMSForm extends Component {
     super(props);
     this.state = {
       message: {
-        to: [],
-        body: []
+        to: '',
+        body: ''
       },
       submitting: false,
       error: false
@@ -18,16 +18,23 @@ class SMSForm extends Component {
 
   onSubmit(event) {
     event.preventDefault();
+    let replacer = function (key, value) {
+      if(typeof value === 'number') {
+          return value > 1 ? value: undefined;
+      }
+      return value;
+  };
     this.setState({ submitting: true });
     fetch('/api/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.state.message)
+      body: JSON.stringify(this.state.message, replacer)
     })
-      .then(res => res.json())
-      .then(data => {
+
+    .then(response => response.json())
+    .then(data => {
         if (data.success) {
           this.setState({
             error: false,
@@ -49,10 +56,9 @@ class SMSForm extends Component {
   onHandleChange(event) {
     const name = event.target.getAttribute('name');
     this.setState({
-      message: { ...this.state.message, [name]: event.target.value}
+      message: { ...this.state.message, [name]: event.target.value }
     });
   }
-
 
   render() {
     return (

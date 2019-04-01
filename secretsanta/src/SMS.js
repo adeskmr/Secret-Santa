@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import './SMSForm.css';
+
 
 class SMS extends Component {
     constructor(props) {
         super(props);
         this.state = {
             value:'',
+            Group: '',
             people: [
-                {name: "", number: ""}
+                {Group: '', name: '', number: '', child: ''}
             ],
             submitting: false,
             error: false
@@ -16,6 +17,10 @@ class SMS extends Component {
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeNumber = this.onChangeNumber.bind(this);
     }
+
+    onChangeGroup = event => {
+        this.setState({ Group: event.target.value});
+      };
 
     onChangeName = event => {
         this.setState({ name: event.target.value});
@@ -27,7 +32,7 @@ class SMS extends Component {
 
     addPeople = () => {
         this.setState(state => {
-          const people = [...state.people, {"name": state.name, "number": state.number}];
+          const people = [...state.people, {"Group": state.Group, "name": state.name, "number": state.number, "child": state.people[0].name}];
     
           return {
             people,
@@ -47,25 +52,26 @@ class SMS extends Component {
       };
 
       onSubmit(event) {
-          console.log(this.state.people);
+
+        for(let i = 0; i<this.state.people.length; i++){
         event.preventDefault();
         this.setState({ submitting: true });
-        fetch('/api/people', {
+        fetch('/api/messages', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(this.state.people)
+          body: JSON.stringify(this.state.people[i])
         })
-          .then(res => res.json())
           .then(data => {
             if (data.success) {
               this.setState({
-                error: false,
-                submitting: false,
-                people: [
-                    {name: "", number: ""}
-                ]
+                value:'',
+            people: [
+                {name: " ", number: " "}
+            ],
+            submitting: false,
+            error: false
               });
             } else {
               this.setState({
@@ -75,34 +81,42 @@ class SMS extends Component {
             }
           });
       }
+    }
 
     render(){
         return (
         <div>
-        <form onSubmit={this.onSubmit}
+        <form onSubmit={this.onSubmit } 
         className={this.state.error ? 'error sms-form' : 'sms-form'}>
+        <input type="text" placeholder="Secret Santa Group" name="Group"
+                group ={this.state.value}
+                onChange={this.onChangeGroup}
+                />
         <ul>
         
         {this.state.people.map((item, index) => (
-            <li key={item}>{item.name} {item.number}
+            <div key={item}>
+            {item.name} {item.number}
             <button
           type="button"
           onClick={() => this.removePeople(index)}> 
           delete </button>
-            </li>
-          ))}
-        </ul>
-            
-                <input type="text" placeholder="name" name="name"
-                name ={this.state.value}
+          <input type="text" placeholder="name" name="name"
+                name ={this.state.people.value}
                 onChange={this.onChangeName}
                 />
+               
                 {/* <input type="text" placeholder="number"></input> */}
             
                  <input type="text" placeholder="number" name="number"
-                number ={this.state.value}
+                number ={this.state.people.value}
                 onChange={this.onChangeNumber}
                 />
+            </div>
+          ))}
+        </ul>
+
+                
                 {/* <input type="text" placeholder="number"></input> */}
                 <button type="button" 
                 onClick={this.addPeople} 
@@ -115,4 +129,6 @@ class SMS extends Component {
 
         )}
 }
+
 export default SMS;
+
