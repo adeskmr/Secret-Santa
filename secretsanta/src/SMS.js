@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-
+import './SMSForm.css';
 
 class SMS extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            name: [''],
             value:'',
-            Group: '',
             people: [
-                {Group: '', name: '', number: '', child: ''}
+                {Group: '', name: 'adesh', number: '', child: ''}
             ],
             submitting: false,
             error: false
@@ -17,6 +17,8 @@ class SMS extends Component {
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeNumber = this.onChangeNumber.bind(this);
     }
+
+
 
     onChangeGroup = event => {
         this.setState({ Group: event.target.value});
@@ -31,8 +33,10 @@ class SMS extends Component {
       };
 
     addPeople = () => {
+       
         this.setState(state => {
-          const people = [...state.people, {"Group": state.Group, "name": state.name, "number": state.number, "child": state.people[0].name}];
+            
+          const people = [...state.people, {"Group": state.Group, "name": state.name, "number": state.number, "child": state.name }];
     
           return {
             people,
@@ -51,17 +55,31 @@ class SMS extends Component {
         });
       };
 
+
+
       onSubmit(event) {
 
         for(let i = 0; i<this.state.people.length; i++){
-        event.preventDefault();
+            event.preventDefault();
+            let recipesCopy = JSON.parse(JSON.stringify(this.state.people))
+            if( i === 0){
+                recipesCopy[i].child = recipesCopy[0].name
+            } else if (i === 1){
+                recipesCopy[i].child = recipesCopy[this.state.people.length -1].name
+            } else {
+                recipesCopy[i].child = recipesCopy[i-1].name
+            }
+   console.log(recipesCopy)
+   console.log(i)
+   console.log(i-1)
+
         this.setState({ submitting: true });
         fetch('/api/messages', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(this.state.people[i])
+          body: JSON.stringify(recipesCopy[i])
         })
           .then(data => {
             if (data.success) {
@@ -101,7 +119,11 @@ class SMS extends Component {
           type="button"
           onClick={() => this.removePeople(index)}> 
           delete </button>
-          <input type="text" placeholder="name" name="name"
+            </div>
+          ))}
+        </ul>
+
+                <input type="text" placeholder="name" name="name"
                 name ={this.state.people.value}
                 onChange={this.onChangeName}
                 />
@@ -112,11 +134,6 @@ class SMS extends Component {
                 number ={this.state.people.value}
                 onChange={this.onChangeNumber}
                 />
-            </div>
-          ))}
-        </ul>
-
-                
                 {/* <input type="text" placeholder="number"></input> */}
                 <button type="button" 
                 onClick={this.addPeople} 

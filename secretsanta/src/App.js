@@ -6,25 +6,6 @@ import SMS from './SMS';
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Group: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  // handleChange(event) {
-  //   this.setState({ Group: event.target.value });
-  // }
-
-  handleChange(event) {
-    event.preventDefault();
-    fetch(`/api/messages?name=${encodeURIComponent(this.state.Group)}`)
-      .then(response => response.json())
-      .then(state => this.setState(state));
-  }
 
   render() {
     return (
@@ -32,14 +13,6 @@ class App extends Component {
         <header className="App-header">
           <h1>Secret Santa</h1>
           
-          <form onChange={this.handleChange}>
-            <label htmlFor="name">Secret Santa Group Name </label>
-            <input
-              id="Group"
-              type="text"
-              value={this.state.Group}
-            />
-          </form>
          
           {/* <a
             className="App-link"

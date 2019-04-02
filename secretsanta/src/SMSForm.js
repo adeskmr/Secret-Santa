@@ -18,19 +18,13 @@ class SMSForm extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    let replacer = function (key, value) {
-      if(typeof value === 'number') {
-          return value > 1 ? value: undefined;
-      }
-      return value;
-  };
     this.setState({ submitting: true });
     fetch('/api/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.state.message, replacer)
+      body: JSON.stringify(this.state.message)
     })
 
     .then(response => response.json())
