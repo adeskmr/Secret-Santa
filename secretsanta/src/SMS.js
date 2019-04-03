@@ -5,8 +5,8 @@ class SMS extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: [''],
             value:'',
+            Group: '',
             people: [
                 {Group: '', name: 'adesh', number: '', child: ''}
             ],
@@ -62,6 +62,13 @@ class SMS extends Component {
         for(let i = 0; i<this.state.people.length; i++){
             event.preventDefault();
             let recipesCopy = JSON.parse(JSON.stringify(this.state.people))
+            // for(let j = recipesCopy.length - 1; j>0; j--){
+            //     let k = Math.floor(Math.random()* j+1)
+            //     let temp = recipesCopy[j]
+            //     recipesCopy[j] = recipesCopy[k]
+            //     recipesCopy[k] = temp;
+            //     console.log(temp)
+            // }
             if( i === 0){
                 recipesCopy[i].child = recipesCopy[0].name
             } else if (i === 1){
@@ -69,9 +76,6 @@ class SMS extends Component {
             } else {
                 recipesCopy[i].child = recipesCopy[i-1].name
             }
-   console.log(recipesCopy)
-   console.log(i)
-   console.log(i-1)
 
         this.setState({ submitting: true });
         fetch('/api/messages', {
@@ -80,6 +84,7 @@ class SMS extends Component {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(recipesCopy[i])
+          
         })
           .then(data => {
             if (data.success) {
@@ -112,7 +117,7 @@ class SMS extends Component {
                 />
         <ul>
         
-        {this.state.people.map((item, index) => (
+        {this.state.people.slice(1).map((item, index) => (
             <div key={item}>
             {item.name} {item.number}
             <button
@@ -124,7 +129,7 @@ class SMS extends Component {
         </ul>
 
                 <input type="text" placeholder="name" name="name"
-                name ={this.state.people.value}
+                value ={this.state.people.value}
                 onChange={this.onChangeName}
                 />
                

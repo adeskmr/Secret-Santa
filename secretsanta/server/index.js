@@ -22,7 +22,7 @@ app.post('/api/messages', (req, res) => {
   client.messages
     .create({
       from: process.env.TWILIO_PHONE_NUMBER,
-      to: req.body.number,
+      to: "+" + req.body.number,
       body: "Hello " + req.body.name + " You are receiving this text because you are apart of secret santa " + req.body.Group + "! Your secret santa is " + req.body.child
     })
     .then(() => {

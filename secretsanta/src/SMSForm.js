@@ -60,6 +60,19 @@ class SMSForm extends Component {
         onSubmit={this.onSubmit}
         className={this.state.error ? 'error sms-form' : 'sms-form'}
       >
+      <ul>
+        
+        {this.state.meesages.map((item, index) => (
+            <div key={item}>
+            {item}
+            <button
+          type="button"
+          onClick={() => this.removePeople(index)}> 
+          delete </button>
+            </div>
+          ))}
+        </ul>
+
         <div>
           <label htmlFor="to">To:</label>
           <input
