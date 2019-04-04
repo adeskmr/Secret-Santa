@@ -75,6 +75,11 @@ class SMS extends Component {
       }
 
       for(let i = 1; i<this.state.people.length; i++){
+        console.log(this.state.people.length)
+            console.log(recipesCopy[i].child)
+            console.log(recipesCopy[i].name)
+            console.log(i)
+            console.log(i+1)
           if(((i + 1) % this.state.people.length)  === 0){
             recipesCopy[i].child = recipesCopy[1].name
           } else {
@@ -95,7 +100,7 @@ class SMS extends Component {
                 this.setState({
                   value:'',
               people: [
-                  {name: " ", number: " "}
+                {Group: '', name: 'adesh', number: '', child: ''}
               ],
               submitting: false,
               error: false
@@ -137,13 +142,13 @@ class SMS extends Component {
                 onChange={this.onChangeName}
                 />
                
-                {/* <input type="text" placeholder="number"></input> */}
+             
             
                  <input type="text" placeholder="number" name="number"
                 number ={this.state.people.value}
                 onChange={this.onChangeNumber}
                 />
-                {/* <input type="text" placeholder="number"></input> */}
+           
                 <button type="button" 
                 onClick={this.addPeople} 
                 disable={!this.state.value}>add</button>
