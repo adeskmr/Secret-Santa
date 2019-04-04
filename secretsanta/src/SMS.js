@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './SMSForm.css';
+import './SMS.css';
 
 class SMS extends Component {
     constructor(props) {
@@ -59,50 +59,54 @@ class SMS extends Component {
 
       onSubmit(event) {
 
-        for(let i = 0; i<this.state.people.length; i++){
+        let recipesCopy = JSON.parse(JSON.stringify(this.state.people))
+        var j, x;
+        for(let i = 1; i<this.state.people.length; i++){
             event.preventDefault();
-            let recipesCopy = JSON.parse(JSON.stringify(this.state.people))
-            // for(let j = recipesCopy.length - 1; j>0; j--){
-            //     let k = Math.floor(Math.random()* j+1)
-            //     let temp = recipesCopy[j]
-            //     recipesCopy[j] = recipesCopy[k]
-            //     recipesCopy[k] = temp;
-            //     console.log(temp)
-            // }
-            if( i === 0){
-                recipesCopy[i].child = recipesCopy[0].name
-            } else if (i === 1){
-                recipesCopy[i].child = recipesCopy[this.state.people.length -1].name
-            } else {
-                recipesCopy[i].child = recipesCopy[i-1].name
+            j = Math.floor(Math.random() * (i + 1)) + 1
+            if(j === 0){
+              j = 1
             }
+            x = recipesCopy[i]
+            recipesCopy[i] = recipesCopy[j]
+            recipesCopy[j] = x
+            console.log(recipesCopy[j])
 
-        this.setState({ submitting: true });
-        fetch('/api/messages', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(recipesCopy[i])
-          
-        })
-          .then(data => {
-            if (data.success) {
-              this.setState({
-                value:'',
-            people: [
-                {name: " ", number: " "}
-            ],
-            submitting: false,
-            error: false
-              });
-            } else {
-              this.setState({
-                error: true,
-                submitting: false
-              });
-            }
-          });
+      }
+
+      for(let i = 1; i<this.state.people.length; i++){
+          if(((i + 1) % this.state.people.length)  === 0){
+            recipesCopy[i].child = recipesCopy[1].name
+          } else {
+            recipesCopy[i].child = recipesCopy[i + 1].name
+          }
+
+          this.setState({ submitting: true });
+          fetch('/api/messages', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(recipesCopy[i])
+            
+          })
+            .then(data => {
+              if (data.success) {
+                this.setState({
+                  value:'',
+              people: [
+                  {name: " ", number: " "}
+              ],
+              submitting: false,
+              error: false
+                });
+              } else {
+                this.setState({
+                  error: true,
+                  submitting: false
+                });
+              }
+            });
       }
     }
 
@@ -122,7 +126,7 @@ class SMS extends Component {
             {item.name} {item.number}
             <button
           type="button"
-          onClick={() => this.removePeople(index)}> 
+          onClick={() => this.removePeople(index + 1)}> 
           delete </button>
             </div>
           ))}
