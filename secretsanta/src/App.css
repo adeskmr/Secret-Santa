@@ -2,14 +2,14 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
 
 .App-header {
-  background-color: red;
+  background: repeating-linear-gradient(
+    45deg,
+    #E74C3C,
+    #E74C3C 30px,
+    #C0392B 30px,
+    #C0392B 60px);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,15 +19,15 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.App-title {
+  
+  font-family:'Mountains of Christmas', cursive;
+  font-style: normal;
+  color: white
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+
+@font-face {
+  font-family: 'Mountains of Christmas';
+  font-style: normal;
+  src: local("Mountains of Christmas"), local("MountainsofChristmas-Regular"), url(https://fonts.gstatic.com/s/mountainsofchristmas/v8/dVGBFPwd6G44IWDbQtPewylJhLDHyIrT3I5b5eGTHmw.woff2) format("woff2"); }

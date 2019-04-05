@@ -1,4 +1,29 @@
-.sms-form input{
-    color: aqua;
+.sms-form {
+    text-align: left;
+    padding: 1em;
+  }
+  .sms-form label {
+    display: block;
+  }
+  .sms-form input,
+  .sms-form textarea {
     font-size: 1em;
-}
+    margin:0 0.3em 0.3em 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .sms-form div {
+    margin-bottom: 0.5em;
+  }
+  .sms-form button {
+    display:inline-block;
+    box-sizing: border-box;
+    background-color: red;
+    font-size: 1em;
+    margin:0 0.3em 0.3em 0;
+    font-family:'Mountains of Christmas',sans-serif;
+  }
+  .sms-form.error {
+    outline: 2px solid #f00;
+  }
+  

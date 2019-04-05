@@ -75,15 +75,16 @@ class SMS extends Component {
       }
 
       for(let i = 1; i<this.state.people.length; i++){
-        console.log(this.state.people.length)
-            console.log(recipesCopy[i].child)
-            console.log(recipesCopy[i].name)
-            console.log(i)
-            console.log(i+1)
-          if(((i + 1) % this.state.people.length)  === 0){
+        
+          if((i + 1) >= this.state.people.length){
             recipesCopy[i].child = recipesCopy[1].name
           } else {
+            console.log(this.state.people.length)
+            console.log(recipesCopy[i].child)
+            console.log(i)
+            console.log(i+1)
             recipesCopy[i].child = recipesCopy[i + 1].name
+            console.log(recipesCopy[i+1].name)
           }
 
           this.setState({ submitting: true });
@@ -117,7 +118,7 @@ class SMS extends Component {
 
     render(){
         return (
-        <div>
+        <div >
         <form onSubmit={this.onSubmit } 
         className={this.state.error ? 'error sms-form' : 'sms-form'}>
         <input type="text" placeholder="Secret Santa Group" name="Group"
@@ -129,7 +130,7 @@ class SMS extends Component {
         {this.state.people.slice(1).map((item, index) => (
             <div key={item}>
             {item.name} {item.number}
-            <button
+            <button className="SMS-button"
           type="button"
           onClick={() => this.removePeople(index + 1)}> 
           delete </button>
@@ -137,7 +138,7 @@ class SMS extends Component {
           ))}
         </ul>
 
-                <input type="text" placeholder="name" name="name"
+                <input type="text" placeholder="name" className="name"
                 value ={this.state.people.value}
                 onChange={this.onChangeName}
                 />
@@ -149,7 +150,7 @@ class SMS extends Component {
                 onChange={this.onChangeNumber}
                 />
            
-                <button type="button" 
+                <button type="button"  className= "add"
                 onClick={this.addPeople} 
                 disable={!this.state.value}>add</button>
         <button type="submit" disabled={this.state.submitting}>
